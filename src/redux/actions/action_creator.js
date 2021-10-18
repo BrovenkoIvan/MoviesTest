@@ -17,14 +17,14 @@ export const getFilms = (films, page) => {
           .then(json => {
             dispatch({
               type: GET_FILMS,
-              // payload: [],
+              payload: [],
               payload: [...films, ...json.results],
             });
           })
           .then(() =>
             dispatch({
               type: SET_PAGE,
-              // payload: 1,
+              payload: 1,
               payload: page + 1,
             }),
           )
