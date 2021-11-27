@@ -5,7 +5,6 @@ import {
    FlatList,
    StatusBar,
    ActivityIndicator,
-   Dimensions,
    useWindowDimensions,
 } from 'react-native';
 import RenderItem from './components/RenderItem';
@@ -15,15 +14,8 @@ import { getFilms } from '../redux/actions/action_creator';
 
 const TopMovieListScreen = ({ navigation }) => {
    const [term, setTerm] = useState('');
-   const [landspace, setIsLandspace] = useState(!isPortrait());
-   function isPortrait() {
-      const screen = Dimensions.get('screen');
-      return screen.height >= screen.width;
-   }
-   Dimensions.addEventListener('change', () => {
-      isPortrait() ? setIsLandspace(false) : setIsLandspace(true);
-   });
 
+   const { width } = useWindowDimensions();
    const { films, loader, page } = useSelector((state) => state.filmReducer);
    const dispatch = useDispatch();
    const fetchFilms = () => dispatch(getFilms(films, page));
@@ -31,26 +23,28 @@ const TopMovieListScreen = ({ navigation }) => {
    useEffect(() => {
       !films.length && getList();
    }, []);
-   console.log(page);
+   console.log('First page');
+
    const filterFilms = films.filter((film) => {
       return film.title.toLowerCase().includes(term.toLowerCase());
    });
 
    const getList = () => {
-      page <= 500 ? fetchFilms() : null;
+      term || (page <= 500 && fetchFilms());
    };
+
    return (
       <View style={styles.container}>
          <StatusBar barStyle={'light-content'} />
          <FlatList
             data={filterFilms}
             keyExtractor={(item) => item.id}
-            key={landspace}
-            numColumns={landspace ? 6 : 3}
-            onEndReached={term ? null : () => getList()}
+            key={width}
+            numColumns={parseInt(width / 130)}
+            onEndReached={() => getList()}
             onEndReachedThreshold={0.05}
-            style={{ width: '99%' }}
-            ListHeaderComponent={() => <Search term={term} setTerm={setTerm} />}
+            contentContainerStyle={styles.flatlistContentContainer}
+            ListHeaderComponent={<Search term={term} setTerm={setTerm} />}
             ListFooterComponent={
                loader ? <ActivityIndicator size="small" color="white" /> : null
             }
@@ -66,7 +60,10 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       backgroundColor: 'black',
-      alignItems: 'center',
+   },
+   flatlistContentContainer: {
+      paddingHorizontal: 5,
+      width: '100%',
    },
 });
 export default TopMovieListScreen;

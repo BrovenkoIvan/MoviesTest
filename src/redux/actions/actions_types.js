@@ -1,3 +1,5 @@
-export const GET_FILMS = 'GET_FILMS'
-export const SET_LOADER = 'SET_LOADER'
-export const SET_PAGE = 'SET_PAGE'
+const GET_FILMS = 'GET_FILMS';
+const SET_LOADER = 'SET_LOADER';
+const SET_PAGE = 'SET_PAGE';
+
+export { GET_FILMS, SET_LOADER, SET_PAGE };

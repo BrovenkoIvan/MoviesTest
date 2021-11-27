@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgb(35,35,35)',
       height: 35,
       borderRadius: 17,
-      margin: 4,
+      marginVertical: 5,
+      marginHorizontal: 10,
       flexDirection: 'row',
       color: 'white',
-      width: '97%',
       alignSelf: 'center',
    },
    inputStyle: {

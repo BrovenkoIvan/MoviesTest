@@ -4,7 +4,9 @@ import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 const img = 'https://image.tmdb.org/t/p/original/';
 const RenderItem = ({ item, navigation }) => {
    return (
-      <TouchableOpacity onPress={() => navigation.navigate('FilmInfo', item)}>
+      <TouchableOpacity
+         onPress={() => navigation.navigate('FilmInfo',item)}
+      >
          <View style={styles.film}>
             <Image
                source={{ uri: img + item.poster_path }}
@@ -17,7 +19,7 @@ const RenderItem = ({ item, navigation }) => {
 };
 const styles = StyleSheet.create({
    film: {
-      width: 124,
+      width: 120,
       margin: 3,
    },
    imageStyle: {

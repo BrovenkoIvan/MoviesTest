@@ -1,6 +1,4 @@
-import {GET_FILMS} from './actions_types';
-import {SET_LOADER} from './actions_types';
-import {SET_PAGE} from './actions_types';
+import {GET_FILMS, SET_LOADER, SET_PAGE} from './actions_types';
 
 export const getFilms = (films, page) => {
   try {
@@ -17,14 +15,14 @@ export const getFilms = (films, page) => {
           .then(json => {
             dispatch({
               type: GET_FILMS,
-              payload: [],
+              // payload: [],
               payload: [...films, ...json.results],
             });
           })
           .then(() =>
             dispatch({
               type: SET_PAGE,
-              payload: 1,
+              // payload: 1,
               payload: page + 1,
             }),
           )
